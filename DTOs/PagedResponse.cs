@@ -15,6 +15,6 @@ namespace DTOs
         public int PageSize { get; set; }
 
         public int TotalPages =>
-            (int)Math.Ceiling((double)TotalCount / PageSize);
+          PageSize > 0 ? (int)Math.Ceiling((double)TotalCount / PageSize) : 0;
     }
 }

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Repository;
 using AutoMapper;
 using DTOs;
@@ -47,25 +47,28 @@ try
     builder.Services.AddScoped<IRatingService, RatingService>();
     builder.Services.AddScoped<IRatingRepository, RatingRepository>();
     builder.Services.AddScoped<ITokenService, TokenService>();
+    builder.Services.AddScoped<IChatRepository, ChatRepository>();
+    builder.Services.AddScoped<IChatService, ChatService>();
 
 
     builder.Services.AddDbContext<StoreContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection("Redis"));
-    builder.Services.AddStackExchangeRedisCache(options =>
-    {
-        var redisHost = builder.Configuration["Redis:Host"] ?? "localhost";
-        var redisPort = builder.Configuration["Redis:Port"] ?? "6379";
-        var redisPassword = builder.Configuration["Redis:Password"];
+    //builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection("Redis"));
+    //builder.Services.AddStackExchangeRedisCache(options =>
+    //{
+    //    var redisHost = builder.Configuration["Redis:Host"] ?? "localhost";
+    //    var redisPort = builder.Configuration["Redis:Port"] ?? "6379";
+    //    var redisPassword = builder.Configuration["Redis:Password"];
 
-        var connectionString = string.IsNullOrWhiteSpace(redisPassword)
-            ? $"{redisHost}:{redisPort},abortConnect=false"
-            : $"{redisHost}:{redisPort},password={redisPassword},abortConnect=false";
+    //    var connectionString = string.IsNullOrWhiteSpace(redisPassword)
+    //        ? $"{redisHost}:{redisPort},abortConnect=false"
+    //        : $"{redisHost}:{redisPort},password={redisPassword},abortConnect=false";
 
-        options.Configuration = connectionString;
-        options.InstanceName = "DotanBooks:";
-    });
+    //    options.Configuration = connectionString;
+    //    options.InstanceName = "DotanBooks:";
+    //});
+    builder.Services.AddDistributedMemoryCache();
 
     // Add services to the container.
 
@@ -74,6 +77,8 @@ try
     builder.Services.AddOpenApi();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAutoMapper(_ => { }, typeof(MappingProfiles).Assembly);
+
+    builder.Services.AddHttpClient();
 
     var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
         ?? new[] { "http://localhost:4200" };
