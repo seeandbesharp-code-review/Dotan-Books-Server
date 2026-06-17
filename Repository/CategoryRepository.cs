@@ -21,7 +21,7 @@ namespace Repository
         {
             return await _context.Categories
                 .AsNoTracking()
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
     }
 }

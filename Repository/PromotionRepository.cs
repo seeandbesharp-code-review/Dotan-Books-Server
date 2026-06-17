@@ -14,7 +14,7 @@ namespace Repository
         public PromotionRepository(StoreContext context) => _context = context;
 
         public async Task<IEnumerable<Promotion>> GetAllAsync() =>
-            await _context.Promotions.ToListAsync();
+            await _context.Promotions.Take(100).ToListAsync();
 
         public async Task<Promotion> CreateAsync(Promotion promotion)
         {

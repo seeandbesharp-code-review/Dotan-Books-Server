@@ -14,7 +14,7 @@ namespace Repository
         public AuthorRepository(StoreContext context) => _context = context;
 
         public async Task<IEnumerable<Author>> GetAllAsync() =>
-            await _context.Authors.ToListAsync();
+            await _context.Authors.Take(100).ToListAsync();
 
         public async Task<Author> CreateAsync(Author author)
         {

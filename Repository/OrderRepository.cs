@@ -49,7 +49,7 @@ namespace Repository
             return await _context.Orders
                 .Where(o => o.CustomerId == customerId)
                 .OrderByDescending(o => o.OrderDate)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<IEnumerable<Order>> GetActiveOrdersAsync()
@@ -57,7 +57,7 @@ namespace Repository
             return await _context.Orders
                 .Where(o => o.Status != OrderStatus.Delivered)
                 .OrderBy(o => o.OrderDate)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
     }
 }

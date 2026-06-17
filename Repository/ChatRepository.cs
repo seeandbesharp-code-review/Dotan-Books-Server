@@ -12,6 +12,6 @@ namespace Repository
         public ChatRepository(StoreContext context) => _context = context;
 
         public async Task<IEnumerable<Book>> GetAllBooksAsync() =>
-            await _context.Books.ToListAsync();
+            await _context.Books.Take(100).ToListAsync();
     }
 }

@@ -214,7 +214,8 @@ try
     var enableHttpsRedirection = builder.Configuration.GetValue("EnableHttpsRedirection", !app.Environment.IsDevelopment());
     if (enableHttpsRedirection)
     {
-        app.UseHttpsRedirection();
+        app.UseExceptionHandler("/error");
+app.UseHttpsRedirection();
     }
 
 
