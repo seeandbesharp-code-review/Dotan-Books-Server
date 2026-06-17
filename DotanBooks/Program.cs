@@ -131,7 +131,7 @@ try
                 factory: _ => new SlidingWindowRateLimiterOptions
                 {
                     PermitLimit = 60,
-                    Window = TimeSpan.FromMinutes(1),
+                    Window = TimeSpan.FromMinutes(5),
                     SegmentsPerWindow = 6,
                     QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
                     QueueLimit = 0
@@ -147,7 +147,7 @@ try
                 factory: _ => new SlidingWindowRateLimiterOptions
                 {
                     PermitLimit = 5,
-                    Window = TimeSpan.FromMinutes(1),
+                    Window = TimeSpan.FromMinutes(5),
                     SegmentsPerWindow = 6,
                     QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
                     QueueLimit = 0
